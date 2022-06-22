@@ -1,0 +1,26 @@
+  services:
+    springapp:
+      build: .
+      container_name: client-api
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/client-api
+      ports:
+        - 8082:8082
+      restart: always
+      depends_on:
+        - db
+    db:
+      image: postgres
+      container_name: db-client
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=127514
+        - POSTGRES_DB=client-api
+        - PGDATA=/var/lib/postgresql/data/pgdata
+      ports:
+        - 5432:5432
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+      restart: always
+  volumes:
+    pgdata:
